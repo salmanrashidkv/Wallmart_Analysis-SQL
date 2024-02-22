@@ -1,6 +1,6 @@
-CREATE DATABASE salesdatawallmart;
+CREATE DATABASE salesdatawalmart;
 
-USE salesdatawallmart;
+USE salesdatawalmart;
 
 CREATE TABLE IF NOT EXISTS sales(
 	invoice_id VARCHAR(30) NOT NULL PRIMARY KEY,
@@ -27,12 +27,7 @@ DESCRIBE sales;
 
 SELECT * FROM sales;
 
-
-
-
-
 -- -------------------------------FEATURE ENGINEERING------------------------------------
--- ----------------------------------------------------------------------------------------- 
 
 SELECT time,
    (CASE  
@@ -43,8 +38,6 @@ SELECT time,
 FROM sales;
         
 ALTER TABLE sales ADD COLUMN time_of_day VARCHAR(20); 
-
-
 
 -- For this to work turn off safe mode for update-----
 -- Edit > Preferences > SQL Edito > scroll down and toggle safe mode
@@ -59,35 +52,24 @@ SET time_of_day=(
 	END
 );
 
--- Add day_name column------------------------------------------------------------ 
+-- ---------Add day_name column------------------------------------------------------------ 
 SELECT
 	date,
 	DAYNAME(date)
 FROM sales;
-
-
 ALTER TABLE sales ADD COLUMN day_name VARCHAR(10);
-
-
-
-
 UPDATE sales
 SET day_name = DAYNAME(date);
 
 
--- Add month_name column------------------------------------------------- 
+-- ------Add month_name column------------------------------------------------- 
 SELECT
 	date,
 	MONTHNAME(date)
 FROM sales;
-
 ALTER TABLE sales ADD COLUMN month_name VARCHAR(10);
-
 UPDATE sales
 SET month_name = MONTHNAME(date);
-
-
-
 
  -- --How many unique cities does the data have?-- 
  
@@ -98,25 +80,17 @@ SELECT DISTINCT city FROM sales;
  SELECT DISTINCT city,branch FROM sales;
  
  
---  ----------------------------------PRODUCT---------------------------------------------------------------------
--- -----------------------------------------------------------------------------------------------------------------
- -- How many unique product lines does the data have?--
+--------------------------------------PRODUCT---------------------------------------------------------------------
+-- How many unique product lines does the data have?--
  
 SELECT DISTINCT product_line FROM sales;
-
 select * from sales;
-
-
 
 -- What is the most selling product line--
 
 SELECT SUM(quantity),product_line FROM sales
 GROUP BY product_line
 ORDER BY SUM(quantity)  DESC;
-
-
-
-
 
 -- What is the total revenue by month--
 
@@ -201,8 +175,7 @@ GROUP BY product_line
 ORDER BY AVG(rating);
 
 
--- ------------------------------------ Sales-------------------------------------------------------------
--- ----------------------------------------------------------------------------------------------------------
+--------------------------------------- Sales-------------------------------------------------------------
 
 -- number of sales made in each time of the day per weekday?--
 
@@ -231,21 +204,16 @@ ORDER BY AVG(vat) DESC;
 
 
 -- -----------------------------------------------Customer----------------------------------------------
--- -----------------------------------------------------------------------------------------------------
 
 -- how many unique customer_types does the data have and its counts?
-
 
 SELECT DISTINCT customer_type AS customer_type,COUNT(customer_type) AS count FROM sales
 GROUP BY customer_type
 ORDER BY count DESC;
 
-
 -- how many unique payment methods does the data have?--
 
-
 SELECT DISTINCT payment_method FROM sales;
-
 
  -- what is the most customer type?--
  
